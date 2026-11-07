@@ -1,0 +1,26 @@
+:root {
+    --color-050: #FFE6F2;
+    --color-100: #FFB8DB;
+    --color-200: #FF8AC4;
+    --color-300: #FF69B4;
+    --color-400: #FF2E96;
+    --color-500: #FF0080;
+    --color-600: #D10069;
+    --color-700: #A30052;
+    --color-800: #75003B;
+    --color-900: #470024;
+    --color-950: #1A000D;
+    
+    --bg-main: #FFF8FA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-subtle: #FFE6F2;
+    --text-main: #470024;
+    --text-muted: #75003B;
+    --border-color: #FFB8DB;
+    
+    --font-heading: 'Lucida Handwriting', 'Segoe Script', cursive;
+    --font-body: system-ui, -apple-system, sans-serif;
+    
+    --transition-fast: 0.2s ease;
+    --radius-base: 12px;
+}

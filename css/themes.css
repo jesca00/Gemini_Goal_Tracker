@@ -1,0 +1,8 @@
+[data-theme="dark"] {
+    --bg-main: #1A000D;
+    --bg-surface: #470024;
+    --bg-surface-subtle: #75003B;
+    --text-main: #FFE6F2;
+    --text-muted: #FFB8DB;
+    --border-color: #75003B;
+}
