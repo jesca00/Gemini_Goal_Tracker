@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Consistency Tracker</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <p>Loading your goals...</p>
+        </div>
+    </div>
+
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-title">
+                <h1>Consistency</h1>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark/light mode">🌙</button>
+            </div>
+        </header>
+
+        <!-- Navigation Bar -->
+        <nav class="app-nav">
+            <button class="nav-btn active" data-target="section-today">Your Today</button>
+            <button class="nav-btn" data-target="section-overviews">Goal Overviews</button>
+            <button class="nav-btn" data-target="section-monthly">Monthly Goals</button>
+        </nav>
+
+        <!-- Main Content Sections -->
+        <main class="app-content">
+            <!-- 1. Your Today Section -->
+            <section id="section-today" class="app-section active">
+                <div class="section-header">
+                    <h2 class="handwriting-font">Your Today</h2>
+                    <div id="today-date-display" class="today-date"></div>
+                </div>
+                <div class="date-navigator">
+                    <button id="prev-day-btn" class="secondary-btn">&larr; Prev Day</button>
+                    <span id="selected-day-label">Today</span>
+                    <button id="next-day-btn" class="secondary-btn">Next Day &rarr;</button>
+                </div>
+                <div id="today-checklist-container" class="checklist-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- 2. Goal Overviews Section -->
+            <section id="section-overviews" class="app-section">
+                <div class="section-header">
+                    <h2 class="handwriting-font">Goal Overviews</h2>
+                </div>
+                <div id="goal-overviews-container" class="overviews-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- 3. Monthly Goals Section -->
+            <section id="section-monthly" class="app-section">
+                <div class="section-header">
+                    <h2 class="handwriting-font">Monthly Goals Planner</h2>
+                    <button id="open-create-goal-modal" class="primary-btn">+ New Goal</button>
+                </div>
+                <div id="monthly-planner-container" class="monthly-planner">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Goal Creation / Editing Modal -->
+    <div id="goal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title" class="handwriting-font">Create New Goal</h3>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <form id="goal-form">
+                <input type="hidden" id="goal-id">
+                <div class="form-group">
+                    <label for="goal-title-input">Goal Title</label>
+                    <input type="text" id="goal-title-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-desc-input">Description (Optional)</label>
+                    <textarea id="goal-desc-input"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goal-start-input">Start Date</label>
+                        <input type="text" id="goal-start-input" class="custom-date-trigger" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-end-input">End Date</label>
+                        <input type="text" id="goal-end-input" class="custom-date-trigger" readonly required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="goal-minimum-input">Daily Minimum Action</label>
+                    <input type="text" id="goal-minimum-input" placeholder="e.g., Read at least 20 pages" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-goal-btn" class="secondary-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Date Picker Modal -->
+    <div id="date-picker-modal" class="modal date-picker-modal">
+        <div class="modal-content date-picker-content">
+            <div class="date-picker-header">
+                <button type="button" id="dp-prev-month" class="icon-btn">&larr;</button>
+                <span id="dp-month-year-label"></span>
+                <button type="button" id="dp-next-month" class="icon-btn">&rarr;</button>
+            </div>
+            <div class="date-picker-weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+            <div id="dp-days-grid" class="date-picker-grid">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="date-picker-actions">
+                <button type="button" id="dp-cancel-btn" class="secondary-btn">Cancel</button>
+                <button type="button" id="dp-select-btn" class="primary-btn">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div id="celebration-overlay" class="celebration-overlay">
+        <div class="celebration-box">
+            <h2 class="handwriting-font">Yay!</h2>
+            <p id="celebration-message">You completed your daily action every day this week!</p>
+            <button id="dismiss-celebration" class="primary-btn">Keep Going!</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
